@@ -1,0 +1,1672 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAEWA CART</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7f5;
+    color: #000000;
+}
+
+header {
+    background: #5b5c1b;
+    color: white;
+    padding: 24px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h1 {
+    font-size: 27px;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 12px;
+    color: #c8dfce;
+    margin-top: 5px;
+}
+
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.topbar h2 {
+    font-size: 23px;
+}
+
+.counter {
+    color: #53705c;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.search {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px 15px;
+    border: 1px solid #dce4dc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+/* CATEGORY PANEL */
+
+.category-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+
+.category-panel h3 {
+    margin-bottom: 6px;
+}
+
+.category-panel p {
+    color: #718074;
+    font-size: 13px;
+}
+
+.category-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.category-controls input,
+.category-controls select {
+    padding: 12px;
+    border: 1px solid #dce4dc;
+    border-radius: 7px;
+    min-width: 180px;
+    flex: 1;
+    background: white;
+}
+
+.category-controls button {
+    background: #17613b;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.category-controls button:hover {
+    background: #10472b;
+}
+
+.print-area {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.print-btn {
+    background: #123d2a;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #17613b;
+}
+
+/* UPLOAD AREA */
+
+.dropzone {
+    border: 2px dashed #76a588;
+    background: #edf5ef;
+    padding: 55px 20px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.dropzone:hover,
+.dropzone.active {
+    background: #dcefe1;
+    border-color: #17613b;
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.dropzone h3 {
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.dropzone p {
+    font-size: 13px;
+    color: #718074;
+    margin-bottom: 18px;
+}
+
+.upload-btn {
+    background: #17613b;
+    color: white;
+    border: none;
+    padding: 12px 23px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background: #10472b;
+}
+
+#fileInput {
+    display: none;
+}
+
+/* GALLERY */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    transition: .2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0,0,0,.1);
+}
+
+.image-wrap {
+    width: 100%;
+    height: 190px;
+    background: #edf0ed;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 13px;
+}
+
+.card input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #e0e5e0;
+    outline: none;
+    padding: 8px 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #24412c;
+}
+
+.card input:focus {
+    border-bottom: 2px solid #17613b;
+}
+
+.category-label {
+    display: inline-block;
+    background: #e6f3e9;
+    color: #17613b;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    margin-top: 9px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    align-items: center;
+    gap: 6px;
+}
+
+.card-actions button {
+    border: none;
+    background: #f0f4f0;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.card-actions .delete {
+    background: #fff0f0;
+    color: #bb3333;
+}
+
+.empty {
+    text-align: center;
+    padding: 55px 10px;
+    color: #879188;
+    grid-column: 1 / -1;
+}
+
+.empty span {
+    display: block;
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #829087;
+    font-size: 12px;
+}
+
+/* IMAGE PREVIEW */
+
+#preview {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#preview.show {
+    display: flex;
+}
+
+.preview-box {
+    max-width: 850px;
+    width: 100%;
+    text-align: center;
+}
+
+.preview-box img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.preview-box p {
+    color: white;
+    margin-top: 15px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/* PRINT STYLES */
+
+@media print {
+
+    header {
+        background: white !important;
+        color: black !important;
+        border-bottom: 2px solid #123d2a;
+    }
+
+    header p {
+        color: #333 !important;
+    }
+
+    .topbar,
+    .category-panel,
+    .dropzone,
+    .card-actions,
+    .print-area,
+    footer,
+    #preview {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+
+    .image-wrap {
+        height: 170px;
+    }
+
+    .image-wrap img {
+        object-fit: contain;
+    }
+
+    .card input {
+        border: none;
+        font-size: 13px;
+    }
+
+    .category-label {
+        color: black;
+        background: #eee;
+    }
+
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+}
+
+@media(max-width:600px) {
+
+    header {
+        padding: 20px;
+    }
+
+    .container {
+        padding: 25px 15px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .image-wrap {
+        height: 145px;
+    }
+
+    .category-controls {
+        flex-direction: column;
+    }
+
+    .category-controls input,
+    .category-controls select,
+    .category-controls button {
+        width: 100%;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>KAEWA CART</h1>
+        <p>YOUR PERSONAL VIRTUAL COLLECTION</p>
+    </div>
+
+    <div style="font-size:12px;color:#c8dfce">
+        LOCAL MODE • PRIVATE COLLECTION
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <div>
+            <h2>My Collection</h2>
+            <p class="counter" id="counter">
+                0 items in your cart
+            </p>
+        </div>
+
+        <input
+            type="search"
+            class="search"
+            id="search"
+            placeholder="Search your collection..."
+        >
+
+    </div>
+
+
+    <!-- CATEGORY MANAGEMENT -->
+
+    <div class="category-panel">
+
+        <h3>Manage Categories</h3>
+
+        <p>
+            Create a category before uploading your images.
+        </p>
+
+        <div class="category-controls">
+
+            <input
+                type="text"
+                id="categoryName"
+                placeholder="Enter new category name"
+            >
+
+            <button type="button" id="createCategory">
+                + Create Category
+            </button>
+
+            <select id="categorySelect">
+                <option value="0">Uncategorized</option>
+            </select>
+
+        </div>
+
+        <p style="margin-top:10px">
+            Select a category to filter your collection
+            and assign new uploads to it.
+        </p>
+
+    </div>
+
+
+    <!-- PRINT BUTTON -->
+
+    <div class="print-area">
+
+        <button
+            class="print-btn"
+            type="button"
+            onclick="printCollection()"
+        >
+            🖨 Print Entire Collection
+        </button>
+
+    </div>
+
+
+    <!-- UPLOAD AREA -->
+
+    <div class="dropzone" id="dropzone">
+
+        <div class="upload-icon">📁</div>
+
+        <h3>Drop your images here</h3>
+
+        <p>
+            Drag and drop pictures from your computer
+        </p>
+
+        <button class="upload-btn" type="button">
+            + Add Images
+        </button>
+
+        <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            multiple
+        >
+
+    </div>
+
+
+    <!-- GALLERY -->
+
+    <div class="gallery" id="gallery">
+
+        <div class="empty">
+            <span>🖼️</span>
+            Your collection is empty.<br>
+            Start by adding some images.
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    KAEWA CART © 2026 | Your images. Your collection. Your space.
+</footer>
+
+
+<!-- IMAGE PREVIEW -->
+
+<div id="preview">
+
+    <span class="close" id="closePreview">&times;</span>
+
+    <div class="preview-box">
+
+        <img id="previewImage" src="" alt="Image preview">
+
+        <p id="previewName"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// =========================================
+// KAEWA CART - DATABASE CONFIGURATION
+// =========================================
+
+const DB_NAME = "KaewaCartDatabase";
+const STORE_NAME = "images";
+const CATEGORY_STORE = "categories";
+
+let db;
+let allImages = [];
+let allCategories = [];
+let galleryURLs = new Set();
+
+const gallery = document.getElementById("gallery");
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("fileInput");
+const search = document.getElementById("search");
+const categorySelect = document.getElementById("categorySelect");
+
+
+// =========================================
+// OPEN DATABASE
+// =========================================
+
+function openDatabase() {
+
+    return new Promise((resolve, reject) => {
+
+        const request = indexedDB.open(DB_NAME, 2);
+
+        request.onupgradeneeded = (event) => {
+
+            const database = event.target.result;
+            const transaction = event.target.transaction;
+
+            // IMAGE STORAGE
+
+            if (!database.objectStoreNames.contains(STORE_NAME)) {
+
+                database.createObjectStore(STORE_NAME, {
+                    keyPath: "id",
+                    autoIncrement: true
+                });
+
+            }
+
+            // CATEGORY STORAGE
+
+            if (!database.objectStoreNames.contains(CATEGORY_STORE)) {
+
+                const categoryStore = database.createObjectStore(
+                    CATEGORY_STORE,
+                    {
+                        keyPath: "id",
+                        autoIncrement: true
+                    }
+                );
+
+                categoryStore.put({
+                    id: 0,
+                    name: "Uncategorized"
+                });
+
+            }
+
+            // MIGRATE EXISTING IMAGES
+
+            if (event.oldVersion < 2) {
+
+                const imageStore = transaction.objectStore(STORE_NAME);
+
+                const cursorRequest = imageStore.openCursor();
+
+                cursorRequest.onsuccess = () => {
+
+                    const cursor = cursorRequest.result;
+
+                    if (cursor) {
+
+                        const image = cursor.value;
+
+                        if (image.categoryId === undefined) {
+
+                            image.categoryId = 0;
+
+                            cursor.update(image);
+
+                        }
+
+                        cursor.continue();
+
+                    }
+
+                };
+
+            }
+
+        };
+
+        request.onsuccess = (event) => {
+
+            db = event.target.result;
+
+            db.onversionchange = () => db.close();
+
+            resolve();
+
+        };
+
+        request.onerror = () => reject(request.error);
+
+    });
+
+}
+
+
+// =========================================
+// GET ALL IMAGES
+// =========================================
+
+function getImages() {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(STORE_NAME, "readonly");
+
+        const store = transaction.objectStore(STORE_NAME);
+
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result);
+
+        request.onerror = () => reject(request.error);
+
+    });
+
+}
+
+
+// =========================================
+// SAVE IMAGE
+// =========================================
+
+function saveImage(image) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+
+        transaction.objectStore(STORE_NAME).add(image);
+
+        transaction.oncomplete = () => resolve();
+
+        transaction.onerror = () => reject(transaction.error);
+
+        transaction.onabort = () => reject(transaction.error);
+
+    });
+
+}
+
+
+// =========================================
+// UPDATE IMAGE NAME
+// =========================================
+
+function updateImage(id, name) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+
+        const store = transaction.objectStore(STORE_NAME);
+
+        const request = store.get(id);
+
+        request.onsuccess = () => {
+
+            const image = request.result;
+
+            if (!image) return;
+
+            image.name = name;
+
+            store.put(image);
+
+        };
+
+        transaction.oncomplete = () => resolve();
+
+        transaction.onerror = () => reject(transaction.error);
+
+    });
+
+}
+
+
+// =========================================
+// DELETE IMAGE
+// =========================================
+
+function deleteImage(id) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(STORE_NAME, "readwrite");
+
+        transaction.objectStore(STORE_NAME).delete(id);
+
+        transaction.oncomplete = () => resolve();
+
+        transaction.onerror = () => reject(transaction.error);
+
+    });
+
+}
+
+
+// =========================================
+// CATEGORY FUNCTIONS
+// =========================================
+
+
+// SAVE CATEGORY
+
+function saveCategory(name) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(
+            CATEGORY_STORE,
+            "readwrite"
+        );
+
+        transaction.objectStore(CATEGORY_STORE).add({
+            name: name
+        });
+
+        transaction.oncomplete = () => resolve();
+
+        transaction.onerror = () => reject(transaction.error);
+
+    });
+
+}
+
+
+// GET CATEGORIES
+
+function getCategories() {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(
+            CATEGORY_STORE,
+            "readonly"
+        );
+
+        const request = transaction
+            .objectStore(CATEGORY_STORE)
+            .getAll();
+
+        request.onsuccess = () => resolve(request.result);
+
+        request.onerror = () => reject(request.error);
+
+    });
+
+}
+
+
+// REFRESH CATEGORY LIST
+
+async function refreshCategories() {
+
+    allCategories = await getCategories();
+
+    const previousValue = categorySelect.value;
+
+    categorySelect.innerHTML = "";
+
+    // ALL CATEGORIES OPTION
+
+    const allOption = document.createElement("option");
+
+    allOption.value = "-1";
+
+    allOption.textContent = "All Categories";
+
+    categorySelect.appendChild(allOption);
+
+    // INDIVIDUAL CATEGORIES
+
+    allCategories.forEach(category => {
+
+        const option = document.createElement("option");
+
+        option.value = category.id;
+
+        option.textContent = category.name;
+
+        categorySelect.appendChild(option);
+
+    });
+
+    // PRESERVE PREVIOUS SELECTION
+
+    if (
+        Array.from(categorySelect.options).some(
+            option => option.value === previousValue
+        )
+    ) {
+
+        categorySelect.value = previousValue;
+
+    } else {
+
+        categorySelect.value = "0";
+
+    }
+
+}
+
+
+// =========================================
+// CREATE CATEGORY BUTTON
+// =========================================
+
+document.getElementById("createCategory").addEventListener(
+    "click",
+    async () => {
+
+        const input = document.getElementById("categoryName");
+
+        const name = input.value.trim();
+
+        if (!name) {
+
+            alert("Please enter a category name.");
+
+            input.focus();
+
+            return;
+
+        }
+
+        const exists = allCategories.some(category =>
+            category.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (exists) {
+
+            alert("This category already exists.");
+
+            return;
+
+        }
+
+        try {
+
+            await saveCategory(name);
+
+            input.value = "";
+
+            await refreshCategories();
+
+            // SELECT THE NEW CATEGORY
+
+            const newCategory = allCategories.find(category =>
+                category.name.toLowerCase() === name.toLowerCase()
+            );
+
+            if (newCategory) {
+
+                categorySelect.value = String(newCategory.id);
+
+            }
+
+            await refreshGallery();
+
+            alert("Category created successfully!");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Unable to create category. Please try again.");
+
+        }
+
+    }
+);
+
+
+// ALLOW ENTER KEY TO CREATE CATEGORY
+
+document.getElementById("categoryName").addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Enter") {
+
+            document.getElementById("createCategory").click();
+
+        }
+
+    }
+);
+
+
+// =========================================
+// UPLOAD IMAGES
+// =========================================
+
+async function uploadImages(files) {
+
+    const validFiles = Array.from(files).filter(file =>
+        file.type.startsWith("image/")
+    );
+
+    if (!validFiles.length) {
+
+        alert("Please select valid image files.");
+
+        return;
+
+    }
+
+    // IF ALL CATEGORIES IS SELECTED,
+    // SAVE NEW IMAGES UNDER UNCATEGORIZED.
+
+    let categoryId = Number(categorySelect.value);
+
+    if (categoryId === -1) {
+
+        categoryId = 0;
+
+    }
+
+    try {
+
+        for (const file of validFiles) {
+
+            const image = {
+
+                name: file.name.replace(/\.[^/.]+$/, ""),
+
+                fileName: file.name,
+
+                blob: file,
+
+                categoryId: categoryId,
+
+                dateAdded: Date.now()
+
+            };
+
+            await saveImage(image);
+
+        }
+
+        await refreshGallery();
+
+        alert(
+            validFiles.length +
+            " image(s) saved successfully!"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to save images. Check your browser storage space."
+        );
+
+    }
+
+}
+
+
+// =========================================
+// RENDER GALLERY
+// =========================================
+
+function renderGallery(images) {
+
+    // REVOKE OLD IMAGE URLS
+
+    galleryURLs.forEach(url => URL.revokeObjectURL(url));
+
+    galleryURLs.clear();
+
+    gallery.innerHTML = "";
+
+    document.getElementById("counter").textContent =
+        `${images.length} of ${allImages.length} items shown`;
+
+    if (!images.length) {
+
+        gallery.innerHTML = `
+            <div class="empty">
+                <span>🖼️</span>
+                No images found.<br>
+                Try another category or search.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    images.forEach(image => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        const imageURL = URL.createObjectURL(image.blob);
+
+        galleryURLs.add(imageURL);
+
+        const imageWrap = document.createElement("div");
+
+        imageWrap.className = "image-wrap";
+
+        const img = document.createElement("img");
+
+        img.src = imageURL;
+
+        img.alt = image.name;
+
+        imageWrap.appendChild(img);
+
+        // IMAGE PREVIEW
+
+        imageWrap.onclick = () => {
+
+            document.getElementById("previewImage").src = imageURL;
+
+            document.getElementById("previewName").textContent =
+                image.name;
+
+            document.getElementById("preview").classList.add("show");
+
+        };
+
+
+        // CARD CONTENT
+
+        const content = document.createElement("div");
+
+        content.className = "card-content";
+
+
+        // IMAGE NAME
+
+        const nameInput = document.createElement("input");
+
+        nameInput.type = "text";
+
+        nameInput.value = image.name;
+
+        nameInput.placeholder = "Enter image name";
+
+        nameInput.setAttribute("aria-label", "Image name");
+
+
+        // SAVE UPDATED NAME
+
+        nameInput.onchange = async () => {
+
+            const newName = nameInput.value.trim() || "Untitled";
+
+            try {
+
+                await updateImage(image.id, newName);
+
+                await refreshGallery();
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert("Unable to update image name.");
+
+            }
+
+        };
+
+
+        // CATEGORY LABEL
+
+        const categoryLabel = document.createElement("div");
+
+        categoryLabel.className = "category-label";
+
+        const category = allCategories.find(c =>
+            c.id === image.categoryId
+        );
+
+        categoryLabel.textContent = category
+            ? category.name
+            : "Uncategorized";
+
+
+        // ACTIONS
+
+        const actions = document.createElement("div");
+
+        actions.className = "card-actions";
+
+
+        // VIEW BUTTON
+
+        const viewButton = document.createElement("button");
+
+        viewButton.textContent = "View Image";
+
+        viewButton.onclick = () => imageWrap.click();
+
+
+        // DELETE BUTTON
+
+        const deleteButton = document.createElement("button");
+
+        deleteButton.textContent = "Delete";
+
+        deleteButton.className = "delete";
+
+        deleteButton.onclick = async () => {
+
+            if (
+                confirm("Are you sure you want to delete this image?")
+            ) {
+
+                try {
+
+                    await deleteImage(image.id);
+
+                    await refreshGallery();
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert("Unable to delete image.");
+
+                }
+
+            }
+
+        };
+
+
+        actions.append(viewButton, deleteButton);
+
+        content.append(nameInput, categoryLabel, actions);
+
+        card.append(imageWrap, content);
+
+        gallery.appendChild(card);
+
+    });
+
+}
+
+
+// =========================================
+// REFRESH COLLECTION
+// =========================================
+
+async function refreshGallery() {
+
+    allImages = await getImages();
+
+    const query = search.value.toLowerCase().trim();
+
+    const selectedCategory = Number(categorySelect.value);
+
+    const filtered = allImages.filter(image => {
+
+        const matchesSearch = image.name
+            .toLowerCase()
+            .includes(query);
+
+        const matchesCategory =
+            selectedCategory === -1 ||
+            image.categoryId === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    renderGallery(filtered);
+
+}
+
+
+// =========================================
+// CATEGORY FILTER
+// =========================================
+
+categorySelect.addEventListener("change", refreshGallery);
+
+
+// =========================================
+// UPLOAD BUTTON
+// =========================================
+
+dropzone.addEventListener("click", event => {
+
+    if (
+        event.target.closest(".upload-btn") ||
+        event.target === dropzone ||
+        event.target.closest("h3") ||
+        event.target.closest("p") ||
+        event.target.closest(".upload-icon")
+    ) {
+
+        fileInput.click();
+
+    }
+
+});
+
+
+// =========================================
+// FILE SELECTION
+// =========================================
+
+fileInput.addEventListener("change", async () => {
+
+    await uploadImages(fileInput.files);
+
+    fileInput.value = "";
+
+});
+
+
+// =========================================
+// DRAG AND DROP
+// =========================================
+
+["dragenter", "dragover"].forEach(eventName => {
+
+    dropzone.addEventListener(eventName, event => {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        dropzone.classList.add("active");
+
+    });
+
+});
+
+
+["dragleave", "drop"].forEach(eventName => {
+
+    dropzone.addEventListener(eventName, event => {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        dropzone.classList.remove("active");
+
+    });
+
+});
+
+
+dropzone.addEventListener("drop", async event => {
+
+    const files = event.dataTransfer.files;
+
+    await uploadImages(files);
+
+});
+
+
+// =========================================
+// SEARCH COLLECTION
+// =========================================
+
+search.addEventListener("input", refreshGallery);
+
+
+// =========================================
+// CLOSE IMAGE PREVIEW
+// =========================================
+
+document.getElementById("closePreview").onclick = () => {
+
+    document.getElementById("preview").classList.remove("show");
+
+};
+
+
+document.getElementById("preview").onclick = event => {
+
+    if (event.target.id === "preview") {
+
+        event.currentTarget.classList.remove("show");
+
+    }
+
+};
+
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        document.getElementById("preview").classList.remove("show");
+
+    }
+
+});
+
+
+// =========================================
+// PRINT ENTIRE COLLECTION
+// =========================================
+
+function printCollection() {
+
+    if (!allImages.length) {
+
+        alert("Your collection is empty.");
+
+        return;
+
+    }
+
+    // OPEN WINDOW IMMEDIATELY TO AVOID POP-UP BLOCKING
+
+    const printWindow = window.open("", "_blank");
+
+    if (!printWindow) {
+
+        alert("Please allow pop-ups to print your collection.");
+
+        return;
+
+    }
+
+    const printURLs = [];
+
+    const imageHTML = allImages.map(image => {
+
+        const category = allCategories.find(c =>
+            c.id === image.categoryId
+        );
+
+        const imageURL = URL.createObjectURL(image.blob);
+
+        printURLs.push(imageURL);
+
+        return `
+            <div class="item">
+
+                <img src="${imageURL}" alt="">
+
+                <h3>${escapeHTML(image.name)}</h3>
+
+                <p>${escapeHTML(category?.name || "Uncategorized")}</p>
+
+            </div>
+        `;
+
+    }).join("");
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html lang="en">
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <title>KAEWA CART - Collection Backup</title>
+
+            <style>
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 25px;
+                    color: #222;
+                }
+
+                h1 {
+                    color: #123d2a;
+                    text-align: center;
+                    letter-spacing: 2px;
+                }
+
+                .summary {
+                    text-align: center;
+                    margin-bottom: 25px;
+                }
+
+                .gallery {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 15px;
+                }
+
+                .item {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    text-align: center;
+                    break-inside: avoid;
+                    page-break-inside: avoid;
+                }
+
+                img {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: contain;
+                }
+
+                h3 {
+                    font-size: 14px;
+                    overflow-wrap: anywhere;
+                }
+
+                p {
+                    font-size: 12px;
+                    color: #17613b;
+                }
+
+                @page {
+                    size: A4;
+                    margin: 12mm;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>KAEWA CART</h1>
+
+            <div class="summary">
+
+                <h2>My Collection Backup</h2>
+
+                <p>Total Images: ${allImages.length}</p>
+
+                <p>Categories: ${allCategories.length}</p>
+
+                <p>Date: ${new Date().toLocaleDateString()}</p>
+
+            </div>
+
+            <div class="gallery">
+
+                ${imageHTML}
+
+            </div>
+
+            <script>
+
+                window.onload = async () => {
+
+                    const images = Array.from(document.images);
+
+                    await Promise.all(images.map(img => {
+
+                        if (img.complete) {
+                            return Promise.resolve();
+                        }
+
+                        return new Promise(resolve => {
+
+                            img.onload = resolve;
+
+                            img.onerror = resolve;
+
+                        });
+
+                    }));
+
+                    window.print();
+
+                };
+
+            <\/script>
+
+        </body>
+
+        </html>
+
+    `);
+
+    printWindow.document.close();
+
+}
+
+
+// =========================================
+// ESCAPE HTML
+// =========================================
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, char => ({
+
+        "&": "&amp;",
+
+        "<": "&lt;",
+
+        ">": "&gt;",
+
+        '"': "&quot;",
+
+        "'": "&#039;"
+
+    })[char]);
+
+}
+
+
+// =========================================
+// INITIALIZE APPLICATION
+// =========================================
+
+async function initialize() {
+
+    try {
+
+        await openDatabase();
+
+        await refreshCategories();
+
+        await refreshGallery();
+
+        console.log("KAEWA CART successfully initialized.");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "KAEWA CART could not open its local database. " +
+            "Please use a modern browser and check browser storage permissions."
+        );
+
+    }
+
+}
+
+initialize();
+
+</script>
+
+</body>
+</html>
